@@ -61,7 +61,7 @@ public class CountryDetailActivity extends AppCompatActivity {
         i.putExtras(bundle);
         startActivity(i);
         finish();
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+        overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
     }
 
     protected void setUpGridView() {
@@ -110,6 +110,6 @@ public class CountryDetailActivity extends AppCompatActivity {
         Intent i = new Intent(this, MapActivity_.class);
         i.putExtras(bundle);
         startActivity(i);
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+        overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -175,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtras(bundle);
                 startActivity(i);
                 hideKeyboard();
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+                overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
             }
 
             @Override
