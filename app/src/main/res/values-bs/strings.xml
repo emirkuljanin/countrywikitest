@@ -6,4 +6,6 @@
     <string name="no_internet">Nema internet konekcije, molimo spojite se na Internet.</string>
     <string name="no_subregion">Nema pod-regije</string>
     <string name="search_for_country">Potrazite Drzavu</string>
+    <string name="got_it">Razumijem!</string>
+
 </resources>

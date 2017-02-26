@@ -5,6 +5,7 @@
     <string name="no_area">No Area Specified</string>
     <string name="no_internet">There is no internet connection, please connect to the Internet.</string>
     <string name="search_for_country">Search for a Country</string>
+    <string name="got_it">Got it!</string>
 
     //Google map resources
     <string name="google_map_key" translatable="false">AIzaSyCFnjfXHcC8kWoK86SXiEFvdbnzdgqKkG8</string>

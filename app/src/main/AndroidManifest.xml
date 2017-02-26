@@ -23,6 +23,8 @@
         <activity
             android:name="com.ng.countrywiki.activity.MapActivity_"
             android:label="@string/title_activity_map"/>
+        <activity
+            android:name="com.ng.countrywiki.activity.CountryDetailActivity_"/>
 
         <meta-data
             android:name="AA_DB_NAME"

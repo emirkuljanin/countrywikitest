@@ -1,6 +1,8 @@
 package com.ng.countrywiki.activity;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +13,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.ng.countrywiki.api.ApiService;
 import com.ng.countrywiki.database.Country;
-import com.ng.countrywiki.fragment.CountryDetailFragment_;
 import com.ng.countrywiki.api.CountryResponse;
 import com.ng.countrywiki.R;
 import com.ng.countrywiki.widget.RecyclerItemClickListener;
@@ -51,16 +55,37 @@ public class MainActivity extends AppCompatActivity {
     EditText searchBar;
     @ViewById(resName = "content")
     RelativeLayout contentLayout;
+    @ViewById(resName = "overlay")
+    RelativeLayout overlay;
 
     RecyclerViewAdapter rvAdapter;
     List<String> countryList = new ArrayList<>();
     String countryName;
     List<String> filteredList = new ArrayList<>();
+    boolean showOverlay = true;
 
     @AfterViews
     protected void initialize() {
-        getCountries();
-        setRecyclerView();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            showOverlay = extras.getBoolean("showOverlay");
+        }
+        if (showOverlay) {
+            getCountries();
+            setOverlay();
+            setRecyclerView();
+        } else {
+            countryList.clear();
+            List<Country> cl = Country.getAllCountries();
+            for (Country c : cl) {
+                countryList.add(c.name);
+            }
+            rvAdapter = new RecyclerViewAdapter(this, countryList);
+            countryRv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            countryRv.setAdapter(rvAdapter);
+            progressBar.setVisibility(View.GONE);
+            countryRv.setVisibility(View.VISIBLE);
+        }
         setSupportActionBar(toolbar);
         setRecyclerOnClickListener();
         searchTextListener();
@@ -122,8 +147,10 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 countryRv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 countryRv.setAdapter(rvAdapter);
+                countryRv.setHasFixedSize(true);
                 progressBar.setVisibility(View.GONE);
                 countryRv.setVisibility(View.VISIBLE);
+                hideKeyboard();
                 if (rvAdapter == null) {
                     Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                 }
@@ -141,13 +168,14 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     countryName = countryList.get(position);
                 }
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.activity_main, CountryDetailFragment_.newInstance())
-                        .commit();
-                hideKeyboard(MainActivity.this);
-                contentLayout.setVisibility(View.GONE);
+                Bundle bundle = new Bundle();
+                bundle.putString("countryName", countryName);
+
+                Intent i = new Intent(MainActivity.this, CountryDetailActivity_.class);
+                i.putExtras(bundle);
+                startActivity(i);
+                hideKeyboard();
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
             }
 
             @Override
@@ -155,10 +183,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }));
-    }
-
-    public String getCountryName() {
-        return countryName;
     }
 
     public void searchTextListener() {
@@ -191,11 +215,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+    public void hideKeyboard() throws NullPointerException {
+        final InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        try {
+            imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void setOverlay() {
+        overlay.setVisibility(View.VISIBLE);
+        overlay.bringToFront();
+        final View overlayView = overlay;
+        final ViewTarget target = new ViewTarget(overlayView);
+        final ShowcaseView sv = new ShowcaseView.Builder(MainActivity.this)
+                .setTarget(target)
+                .hideOnTouchOutside()
+                .replaceEndButton(R.layout.overlay_button)
+                .withHoloShowcase()
+                .blockAllTouches()
+                .build();
+        sv.overrideButtonClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overlay.setVisibility(View.GONE);
+                sv.setVisibility(View.GONE);
+            }
+        });
     }
 }

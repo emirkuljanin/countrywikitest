@@ -70,5 +70,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Click(resName = "back_button")
     void backToMain() {
         finish();
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
     }
 }

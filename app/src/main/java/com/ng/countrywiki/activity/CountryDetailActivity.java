@@ -1,32 +1,27 @@
-package com.ng.countrywiki.fragment;
+package com.ng.countrywiki.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ng.countrywiki.database.Country;
-import com.ng.countrywiki.fragment.CountryDetailFragment_;
-import com.ng.countrywiki.widget.GridViewAdapter;
-import com.ng.countrywiki.activity.MainActivity_;
-import com.ng.countrywiki.activity.MapActivity_;
 import com.ng.countrywiki.R;
-import com.ng.countrywiki.activity.MainActivity;
+import com.ng.countrywiki.database.Country;
+import com.ng.countrywiki.widget.GridViewAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@EFragment(resName = "fragment_country_detail")
-public class CountryDetailFragment extends Fragment {
+@EActivity(resName = "activity_country_detail")
+public class CountryDetailActivity extends AppCompatActivity {
 
     @ViewById(resName = "country_name_tv")
     TextView countryNameTv;
@@ -37,10 +32,6 @@ public class CountryDetailFragment extends Fragment {
 
     Country country;
 
-    public static CountryDetailFragment_ newInstance() {
-        return new CountryDetailFragment_();
-    }
-
     @AfterViews
     protected void initialize() {
         setHeaderTitleAndFlag();
@@ -48,26 +39,29 @@ public class CountryDetailFragment extends Fragment {
     }
 
     protected void setHeaderTitleAndFlag() {
-        MainActivity activity = (MainActivity) getActivity();
-        if (activity != null) {
-            String countryName = activity.getCountryName();
+        Bundle extras = getIntent().getExtras();
+        String countryName = extras.getString("countryName");
 
-            country = Country.getCountryByName(countryName);
-            String countryCode = country.alpha2Code.toLowerCase();
+        country = Country.getCountryByName(countryName);
+        String countryCode = country.alpha2Code.toLowerCase();
 
-            Resources res = this.getResources();
-            int resID = res.getIdentifier(countryCode, "drawable", getContext().getPackageName());
+        Resources res = this.getResources();
+        int resID = res.getIdentifier(countryCode, "drawable", this.getPackageName());
 
-            countryNameTv.setText(countryName);
-            countryFlag.setBackgroundResource(resID);
-        }
+        countryNameTv.setText(countryName);
+        countryFlag.setBackgroundResource(resID);
     }
 
     @Click(resName = "back_button")
     void backToMain() {
-        Intent i = new Intent(getActivity(), MainActivity_.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("showOverlay", false);
+
+        Intent i = new Intent(this, MainActivity_.class);
+        i.putExtras(bundle);
         startActivity(i);
-        getActivity().overridePendingTransition(0, 0);
+        finish();
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
     }
 
     protected void setUpGridView() {
@@ -105,17 +99,17 @@ public class CountryDetailFragment extends Fragment {
         drawableIds.add(R.drawable.telephone);
         drawableIds.add(R.drawable.area);
 
-        gridView.setAdapter(new GridViewAdapter(getContext(), countryInformation, drawableIds));
+        gridView.setAdapter(new GridViewAdapter(this, countryInformation, drawableIds));
     }
 
     @Click(resName = "showMapButton")
-    void showMap() {
+    protected void showMap() {
         Bundle bundle = new Bundle();
         bundle.putString("countryName", country.name);
 
-        Intent i = new Intent(getActivity(), MapActivity_.class);
+        Intent i = new Intent(this, MapActivity_.class);
         i.putExtras(bundle);
         startActivity(i);
-        ((Activity) getActivity()).overridePendingTransition(0, 0);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
     }
 }
