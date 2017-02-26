@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void setRecyclerView() {
-        new CountDownTimer(5500, 1000) {
+        new CountDownTimer(6000, 1000) {
 
             @Override
             public void onTick(long l) {
@@ -122,11 +122,11 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 countryRv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 countryRv.setAdapter(rvAdapter);
+                progressBar.setVisibility(View.GONE);
+                countryRv.setVisibility(View.VISIBLE);
                 if (rvAdapter == null) {
                     Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                 }
-                progressBar.setVisibility(View.GONE);
-                countryRv.setVisibility(View.VISIBLE);
             }
         }.start();
     }

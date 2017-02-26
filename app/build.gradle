@@ -10,6 +10,7 @@ android {
     defaultConfig {
         applicationId "com.ng.countrywiki"
         minSdkVersion 17
+        multiDexEnabled true
 
         targetSdkVersion 24
         versionCode 1
@@ -44,6 +45,5 @@ dependencies {
     compile 'com.tuyenmonkey:mkloader:1.0.0'
     compile 'com.google.android.gms:play-services-maps:10.2.0'
     compile 'com.google.android.gms:play-services-location:10.2.0'
-    compile 'com.google.android.gms:play-services:10.2.0'
     testCompile 'junit:junit:4.12'
 }
