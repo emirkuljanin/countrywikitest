@@ -5,29 +5,29 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ng.countrywiki.MainActivity">
+    tools:context="com.ng.countrywiki.activity.MainActivity">
 
     <RelativeLayout
+        android:id="@+id/header_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/header_holder">
+        android:layout_marginBottom="10dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?android:attr/actionBarSize"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?android:attr/actionBarSize">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center"
-                android:layout_marginEnd="20dp"
                 android:text="@string/app_name"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="30sp" />
@@ -35,14 +35,40 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/header_holder">
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/search_icon"
+            android:hint="@string/search_for_country"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/search" />
+
+        <View
+            android:id="@+id/border"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/search_bar"
+            android:layout_marginTop="10dp"
+            android:background="#d3d3d3" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/countryRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/border"
             android:visibility="gone" />
 
         <com.tuyenmonkey.mkloader.MKLoader
@@ -50,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="visible"
+            android:visibility="gone"
             app:mk_color="#aaaaaa"
             app:mk_type="Whirlpool" />
     </RelativeLayout>

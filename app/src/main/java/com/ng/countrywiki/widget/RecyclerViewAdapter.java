@@ -1,4 +1,4 @@
-package com.ng.countrywiki;
+package com.ng.countrywiki.widget;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tuyenmonkey.mkloader.MKLoader;
+import com.ng.countrywiki.R;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<String> countryList;
     private Context context;
 
-    RecyclerViewAdapter(Context context, List<String> countryList) {
+    public RecyclerViewAdapter(Context context, List<String> countryList) {
         this.countryList = countryList;
         this.context = context;
     }

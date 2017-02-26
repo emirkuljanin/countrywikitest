@@ -1,4 +1,4 @@
-package com.ng.countrywiki;
+package com.ng.countrywiki.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

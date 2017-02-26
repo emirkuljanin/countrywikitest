@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Country Wiki</string>
-    <string name="error_no_connection">No connection!</string>
-    <string name="error_service_unavailable">Service is unavailable!</string>
-    <string name="google_map_key">AIzaSyCFnjfXHcC8kWoK86SXiEFvdbnzdgqKkG8</string>
+    <string name="no_capital">No Capital</string>
+    <string name="no_subregion">No Sub-region</string>
+    <string name="no_area">No Area Specified</string>
+    <string name="no_internet">There is no internet connection, please connect to the Internet.</string>
+    <string name="search_for_country">Search for a Country</string>
+
+    //Google map resources
+    <string name="google_map_key" translatable="false">AIzaSyCFnjfXHcC8kWoK86SXiEFvdbnzdgqKkG8</string>
+    <string name="title_activity_map" translatable="false">Map</string>
 </resources>

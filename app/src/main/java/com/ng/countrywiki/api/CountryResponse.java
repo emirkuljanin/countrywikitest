@@ -1,7 +1,6 @@
-package com.ng.countrywiki;
+package com.ng.countrywiki.api;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Table;
+import com.ng.countrywiki.database.Translations;
 
 import java.util.HashMap;
 import java.util.List;

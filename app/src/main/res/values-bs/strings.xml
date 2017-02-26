@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Country Wiki</string>
+    <string name="no_area">Povrsina nije specificirana</string>
+    <string name="no_capital">Nema glavnog Grada</string>
+    <string name="no_internet">Nema internet konekcije, molimo spojite se na Internet.</string>
+    <string name="no_subregion">Nema pod-regije</string>
+    <string name="search_for_country">Potrazite Drzavu</string>
+</resources>

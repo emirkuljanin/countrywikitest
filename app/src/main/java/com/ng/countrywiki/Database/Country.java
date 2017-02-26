@@ -1,4 +1,4 @@
-package com.ng.countrywiki;
+package com.ng.countrywiki.database;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -16,9 +16,6 @@ public class Country extends Model {
 
     @Column(name = "Alpha2Code")
     public String alpha2Code;
-
-    @Column(name = "CallingCodes")
-    public List<String> callingCodes;
 
     @Column(name = "Capital")
     public String capital;
@@ -44,12 +41,6 @@ public class Country extends Model {
     @Column(name = "NumericCode")
     public String numericCode;
 
-    @Column(name = "Currencies")
-    public List<String> currencies;
-
-    @Column(name = "Languages")
-    public List<String> languages;
-
     public Country() {
         super();
     }
@@ -63,7 +54,7 @@ public class Country extends Model {
     }
 
     public static Country getCountryByName(String countryName) {
-        return  new Select()
+        return new Select()
                 .from(Country.class)
                 .where("Name = ?", countryName)
                 .executeSingle();

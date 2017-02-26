@@ -1,20 +1,21 @@
-package com.ng.countrywiki;
+package com.ng.countrywiki.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.ng.countrywiki.database.Country;
+import com.ng.countrywiki.fragment.CountryDetailFragment_;
+import com.ng.countrywiki.widget.GridViewAdapter;
+import com.ng.countrywiki.activity.MainActivity_;
+import com.ng.countrywiki.activity.MapActivity_;
+import com.ng.countrywiki.R;
+import com.ng.countrywiki.activity.MainActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -35,7 +36,6 @@ public class CountryDetailFragment extends Fragment {
     GridView gridView;
 
     Country country;
-    GoogleMap map;
 
     public static CountryDetailFragment_ newInstance() {
         return new CountryDetailFragment_();
@@ -67,7 +67,7 @@ public class CountryDetailFragment extends Fragment {
     void backToMain() {
         Intent i = new Intent(getActivity(), MainActivity_.class);
         startActivity(i);
-        ((Activity) getActivity()).overridePendingTransition(0, 0);
+        getActivity().overridePendingTransition(0, 0);
     }
 
     protected void setUpGridView() {
@@ -80,7 +80,7 @@ public class CountryDetailFragment extends Fragment {
         if (capital != null && !capital.isEmpty()) {
             countryInformation.add(capital);
         } else {
-            countryInformation.add("No Capital");
+            countryInformation.add(getString(R.string.no_capital));
         }
         countryInformation.add(String.valueOf(country.population));
         countryInformation.add(country.region);
@@ -88,14 +88,14 @@ public class CountryDetailFragment extends Fragment {
         if (subregion != null && !subregion.isEmpty()) {
             countryInformation.add(subregion);
         } else {
-            countryInformation.add("No Sub-region");
+            countryInformation.add(getString(R.string.no_subregion));
         }
 
         countryInformation.add("+ " + country.numericCode);
-        if (!area.equalsIgnoreCase("null")) {
+        if (!"null".equalsIgnoreCase(area)) {
             countryInformation.add(area);
         } else {
-            countryInformation.add("No Area Specified");
+            countryInformation.add(getString(R.string.no_area));
         }
 
         drawableIds.add(R.drawable.capital);
@@ -108,18 +108,14 @@ public class CountryDetailFragment extends Fragment {
         gridView.setAdapter(new GridViewAdapter(getContext(), countryInformation, drawableIds));
     }
 
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        Double lat = country.lat;
-//        Double lng = country.lng;
-//        if (lat != null && lng != null) {
-//            LatLng location = new LatLng(lat, lng);
-//            map = googleMap;
-//            map.getUiSettings().setZoomControlsEnabled(true);
-//            map.addMarker(new MarkerOptions().position(location));
-//            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
-//        } else {
-//            Toast.makeText(getContext(), "Country has no coordinates available", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    @Click(resName = "showMapButton")
+    void showMap() {
+        Bundle bundle = new Bundle();
+        bundle.putString("countryName", country.name);
+
+        Intent i = new Intent(getActivity(), MapActivity_.class);
+        i.putExtras(bundle);
+        startActivity(i);
+        ((Activity) getActivity()).overridePendingTransition(0, 0);
+    }
 }
