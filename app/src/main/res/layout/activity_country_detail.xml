@@ -40,23 +40,30 @@
         </android.support.v7.widget.Toolbar>
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/grid_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:horizontalSpacing="8dp"
-        android:numColumns="2"
-        android:padding="8dp"
-        android:verticalSpacing="8dp" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/show_map_button"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/map_button" />
+        <GridView
+            android:id="@+id/grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/show_map_button"
+            android:layout_margin="8dp"
+            android:horizontalSpacing="8dp"
+            android:numColumns="2"
+            android:padding="8dp"
+            android:verticalSpacing="8dp" />
+
+        <ImageView
+            android:id="@+id/show_map_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/map_button" />
+    </RelativeLayout>
+
 
 </LinearLayout>

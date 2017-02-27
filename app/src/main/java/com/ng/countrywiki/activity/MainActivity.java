@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtras(bundle);
                 startActivity(i);
                 hideKeyboard();
+                finish();
                 overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
             }
 
